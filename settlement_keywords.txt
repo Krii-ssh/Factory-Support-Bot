@@ -1,0 +1,111 @@
+# Settlement-pressure trigger vocabulary.
+#
+# THIS FILE IS MEANT TO BE EDITED BY A PUNJABI/HINDI SPEAKER, NOT A PROGRAMMER.
+# One phrase per line. Lines starting with # are ignored. No code changes are
+# needed after editing, because classify.py reads this file at import.
+#
+# Add every spelling people actually type, as its own line. Do not try to be
+# clever or compact: "angutha", "angootha" and "anguutha" are three lines.
+#
+# Matching: Latin-script phrases match whole words only ("sign" does not fire
+# on "design"). Devanagari and Gurmukhi phrases match anywhere in the word,
+# because Hindi and Punjabi attach postpositions to the noun and a whole-word
+# rule would miss कागज़ों / ਕਾਗਜ਼ਾਂ.
+#
+# Over-triggering is the correct failure direction. A family that reads this
+# warning unnecessarily loses thirty seconds. A family that misses it can sign
+# away their entire claim. When in doubt, add the word.
+#
+# ⚠️ Still needs a native-speaker pass. These were drafted by a non-speaker.
+# A Ludhiana union rep will produce a better list in ten minutes.
+
+# --- English ---
+sign
+signs
+signed
+signing
+signature
+signatures
+paper
+papers
+stamp paper
+blank paper
+settle
+settled
+settlement
+full and final
+final settlement
+compromise
+receipt
+affidavit
+thumb
+thumb impression
+fingerprint
+withdraw the case
+close the case
+take it and close
+offering
+offered
+cash
+lump sum
+giving us money
+giving money
+gave us money
+
+# --- Romanised Hindi / Punjabi (how this actually arrives on WhatsApp) ---
+dastkhat
+dastakhat
+hastakshar
+kagaz
+kaghaz
+kagaj
+kaagaz
+samjhauta
+samjhota
+samjota
+raazinama
+razinama
+rajinama
+angutha
+angootha
+anguutha
+angoutha
+# NOT bare "muavza" / मुआवजा / ਮੁਆਵਜ਼ਾ, because that just means "compensation", and it
+# is how a family asks the ordinary entitlement question. Adding it would send
+# "how much are we owed?" to the don't-sign warning instead of an answer.
+muavza lene
+muavza le lo
+paise de rahe
+paise dene
+case wapas
+kes wapas
+
+# --- Hindi (Devanagari) ---
+दस्तखत
+हस्ताक्षर
+अंगूठा
+कागज
+कागज़
+समझौता
+राजीनामा
+राज़ीनामा
+साइन
+स्टाम्प
+पैसे दे रहे
+पैसे देने
+केस वापस
+
+# --- Punjabi (Gurmukhi) ---
+ਦਸਤਖਤ
+ਦਸਤਖ਼ਤ
+ਅੰਗੂਠਾ
+ਕਾਗਜ
+ਕਾਗਜ਼
+ਸਮਝੌਤਾ
+ਰਾਜੀਨਾਮਾ
+ਰਾਜ਼ੀਨਾਮਾ
+ਸਾਈਨ
+ਸਟਾਂਪ
+ਪੈਸੇ ਦੇ ਰਹੇ
+ਪੈਸੇ ਦੇਣ
+ਕੇਸ ਵਾਪਸ

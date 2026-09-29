@@ -1,0 +1,41 @@
+# Secrets. Never commit these.
+.env
+.env.*
+!.env.example
+*.pem
+
+# Vector store. Rebuilt from knowledge_base/ by ingest.py, so it is derived
+# data, not source. Committing it also risks shipping chunks that were deleted
+# from the corpus for a safety reason.
+chroma/
+chroma.bak/
+
+# Refusal log contains real user questions once this is live.
+refusals.jsonl
+
+# Case tracker. Holds WhatsApp numbers, which are personal data, and the first
+# `git add .` would have committed them. On the server this lives on the
+# mounted disk instead, via CASES_DB_PATH.
+cases.db
+cases.db-journal
+cases.db-wal
+cases.db-shm
+
+# Node deck generator's dependencies. The committed lockfile is enough.
+node_modules/
+
+# Source-audit folder. The audit PDFs are third-party publications and are kept
+# out of the repository.
+audit_evidence/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Editors and operating systems
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

@@ -1,0 +1,8 @@
+# Normalise line endings in the repository, and keep the Windows launcher CRLF.
+* text=auto
+*.bat text eol=crlf
+*.sh text eol=lf
+
+# Binary files
+*.pptx binary
+*.pdf binary

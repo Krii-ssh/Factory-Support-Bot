@@ -1,0 +1,143 @@
+[
+  {
+    "text": "The factory must pay two things. First, a compensation amount equal to 50 percent of his monthly wage multiplied by an age‑based factor set in the Sixth Schedule. Second, a separate funeral payment of at least ₹15,000. The exact sum depends on his wage, age, and the government‑issued factor, so a lawyer will calculate the final figure.\n\nYour most urgent step is to obtain a post‑mortem report, which is needed to start the claim. This is general information, not a lawyer's advice, your case may differ.\n\nFree legal help, and it costs you nothing:\nDistrict Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051",
+    "route": "RAG -> openai/gpt-oss-120b (best 0.767) - validator PASS",
+    "rules": [
+      "INTENT_death_case:classifier",
+      "REVIEW_REQUIRED_legal_partner_signoff_pending",
+      "RULE4_figures_suppressed"
+    ],
+    "chunks": [
+      "ss_code_2020_ch7::s76_death_formula (0.767)",
+      "ss_code_2020_ch7::s74_employer_liability (0.753)",
+      "ss_code_2020_ch7::s76_funeral_expenses (0.736)",
+      "ss_code_2020_ch7::s73_fatal_accident_report (0.705)",
+      "ss_code_2020_ch7::s82_limitation (0.702)"
+    ],
+    "labels": [
+      "Code on Social Security, 2020 (Act 36 of 2020), Chapter VII"
+    ],
+    "question": "my husband died in a factory accident, what are we owed?"
+  },
+  {
+    "text": "The compensation is not a fixed sum. It is 50 % of the deceased’s monthly wage multiplied by a factor that depends on his completed age, as set out in the Sixth Schedule. You will need to establish his monthly wage (under s.78) and his exact age to work out the amount. The final figure also depends on any Central Government notification that may set a minimum or ceiling, which must be checked.\n\nYour next step is to collect his wage records – payslips, bank statements, or any proof of earnings – and confirm his age. This will allow the authorities to calculate the entitlement.\n\nThis is general information, not a lawyer's advice, your case may differ.\n\nFree legal help, and it costs you nothing:\nDistrict Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051",
+    "route": "RAG -> openai/gpt-oss-120b (best 0.621) - validator PASS",
+    "rules": [
+      "INTENT_death_case:classifier",
+      "REVIEW_REQUIRED_legal_partner_signoff_pending",
+      "RULE4_figures_suppressed"
+    ],
+    "chunks": [
+      "ss_code_2020_ch7::how_the_amount_is_worked_out (0.621)",
+      "ss_code_2020_ch7::s76_death_formula (0.607)",
+      "ss_code_2020_ch7::s76_funeral_expenses (0.598)",
+      "ss_code_2020_ch7::s78_monthly_wages (0.597)",
+      "ss_code_2020_ch7::s89_registration_of_agreements (0.548)"
+    ],
+    "labels": [
+      "Code on Social Security, 2020 (Act 36 of 2020), Chapter VII"
+    ],
+    "question": "how much money will we get exactly?"
+  },
+  {
+    "text": "Write down everything you know about the accident and send that letter by post to the Superintendent of Police (or, in Ludhiana, the Deputy Commissioner/Commissioner of Police). Keep the receipt and a copy for yourself. If the officer is satisfied it shows a cognizable offence, they must order an investigation or direct a subordinate to do so. If nothing happens after that, you can then approach a magistrate.  \n\nThis is general information, not a lawyer's advice, your case may differ.\n\nFree legal help, and it costs you nothing:\nDistrict Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051",
+    "route": "RAG -> openai/gpt-oss-120b (best 0.746) - validator PASS",
+    "rules": [
+      "INTENT_fir_police:classifier",
+      "RULE5_central_sphere_dropped:oshwc_central_rules_2026::employer_duty_inform_family",
+      "REVIEW_REQUIRED_legal_partner_signoff_pending"
+    ],
+    "chunks": [
+      "bnss_2023_fir_death::bnss_173_4_sp_escalation (0.746)",
+      "bnss_2023_fir_death::bnss_173_fir_registration (0.710)",
+      "bnss_2023_fir_death::bnss_175_3_magistrate (0.690)",
+      "bnss_2023_fir_death::what_the_family_should_secure (0.686)"
+    ],
+    "labels": [
+      "Bharatiya Nagarik Suraksha Sanhita, 2023; Bharatiya Nyaya Sanhita, 2023"
+    ],
+    "question": "the police are refusing to write the FIR"
+  },
+  {
+    "text": "Ask the police to send the body to the nearest civil surgeon for a post‑mortem examination right away. The law requires a post‑mortem when a death occurs “by machinery or by an accident,” and without it the evidence is lost. Insist on this before any cremation or burial. This is general information, not a lawyer's advice, your case may differ.\n\nFree legal help, and it costs you nothing:\nDistrict Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051",
+    "route": "RAG -> openai/gpt-oss-120b (best 0.720) - validator PASS",
+    "rules": [
+      "INTENT_body_postmortem:classifier",
+      "RULE5_central_sphere_dropped:oshwc_central_rules_2026::employer_duty_inform_family",
+      "REVIEW_REQUIRED_legal_partner_signoff_pending"
+    ],
+    "chunks": [
+      "bnss_2023_fir_death::bnss_194_inquest (0.720)",
+      "oshwc_code_2020_duties::employer_duty_notify_accident (0.618)",
+      "ss_code_2020_ch7::s73_fatal_accident_report (0.615)",
+      "ss_code_2020_ch7::s76_funeral_expenses (0.608)"
+    ],
+    "labels": [
+      "Bharatiya Nagarik Suraksha Sanhita, 2023; Bharatiya Nyaya Sanhita, 2023",
+      "Code on Social Security, 2020 (Act 36 of 2020), Chapter VII",
+      "Occupational Safety, Health and Working Conditions Code, 2020 (Act 37 of 2020)"
+    ],
+    "question": "they took his body away, what should we do?"
+  },
+  {
+    "text": "Please stop and read this before you sign anything.\n\nIf someone from the factory is offering you money now and asking you to sign a paper, a receipt, or a stamp paper, please do not sign it yet, and please do not take a thumb impression on anything you have not had read to you by someone you trust.\n\nA paper like this is often written to say the family accepts this money as full and final, and gives up the right to claim anything more. The amount the law entitles a family to after a death is usually far more than what is offered in the first days. Once you sign, getting the rest becomes much harder.\n\nYou are allowed to take time. You are allowed to say 'I will sign after I have shown this to a lawyer.' Nobody can require you to sign today.\n\nIf you have already signed something, that is not the end of the road. Please still speak to a lawyer, and take a copy of whatever you signed.\n\nFree legal help is available and it costs you nothing: District Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051.",
+    "route": "hardcoded (no retrieval, no LLM)",
+    "rules": [
+      "INTENT_settlement_pressure:keyword:offering",
+      "PREEMPT_settlement_pressure_fixed_response"
+    ],
+    "chunks": [],
+    "labels": [],
+    "question": "the owner is offering us 2 lakh to sign a paper"
+  },
+  {
+    "text": "The factory itself can be held liable because the work was part of its ordinary business, even though your husband was hired through a thekedar. Under Section 85 the factory must pay the same compensation it would have if the worker were its direct employee, and you may also claim from the contractor if that is easier. First, have a post‑mortem done to confirm the cause of death and create the official record needed for a claim.  \n\nThis is general information, not a lawyer's advice, your case may differ.\n\nFree legal help, and it costs you nothing:\nDistrict Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051",
+    "route": "RAG -> openai/gpt-oss-120b (best 0.623) - validator PASS",
+    "rules": [
+      "INTENT_death_case:classifier",
+      "RULE5_central_sphere_dropped:oshwc_central_rules_2026::form_xi_notice_of_accident",
+      "REVIEW_REQUIRED_legal_partner_signoff_pending"
+    ],
+    "chunks": [
+      "ss_code_2020_ch7::s85_contractor_liability (0.623)",
+      "ss_code_2020_ch7::s78_monthly_wages (0.621)",
+      "oshwc_code_2020_duties::employer_duty_specific_factory (0.611)",
+      "ss_code_2020_ch7::s74_employer_liability (0.606)"
+    ],
+    "labels": [
+      "Code on Social Security, 2020 (Act 36 of 2020), Chapter VII",
+      "Occupational Safety, Health and Working Conditions Code, 2020 (Act 37 of 2020)"
+    ],
+    "question": "he worked through a thekedar, not directly"
+  },
+  {
+    "text": "I don't have reliable information on this specific point, let me connect you with free legal aid.\n\nFree legal help, and it costs you nothing:\nDistrict Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051",
+    "route": "handoff (out_of_scope) - retrieval and LLM not called",
+    "rules": [
+      "INTENT_out_of_scope:classifier"
+    ],
+    "chunks": [],
+    "labels": [],
+    "question": "what is the weather in Ludhiana"
+  },
+  {
+    "text": "The Factories Act, 1948 no longer applies to factory accidents. Its duties have moved to the Occupational Safety, Health and Working Conditions Code, 2020. The employer’s safety duties are now in **section 6** of that Code, and the duty to report a death is in **section 10**. These sections replace the old factory‑act provisions. This is general information, not a lawyer's advice, your case may differ.\n\nFree legal help, and it costs you nothing:\nDistrict Legal Services Authority, Ludhiana, ADR Centre, Ground Floor, Additional Block, District Courts Complex, Ludhiana, 0161-2400051",
+    "route": "RAG -> openai/gpt-oss-120b (best 0.775) - validator PASS",
+    "rules": [
+      "INTENT_death_case:classifier",
+      "RULE1_repealed_dropped:factories_act_1948_repealed::factories_act_repealed_redirect",
+      "REVIEW_REQUIRED_legal_partner_signoff_pending"
+    ],
+    "chunks": [
+      "oshwc_code_2020_duties::which_law_applies_now (0.775)",
+      "oshwc_code_2020_duties::employer_duty_safe_workplace (0.761)",
+      "oshwc_code_2020_duties::employer_duty_notify_accident (0.731)",
+      "ss_code_2020_ch7::s74_employer_liability (0.715)"
+    ],
+    "labels": [
+      "Code on Social Security, 2020 (Act 36 of 2020), Chapter VII",
+      "Occupational Safety, Health and Working Conditions Code, 2020 (Act 37 of 2020)"
+    ],
+    "question": "what does the Factories Act say the factory must do"
+  }
+]

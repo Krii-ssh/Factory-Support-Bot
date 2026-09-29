@@ -1,0 +1,31 @@
+name: Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  offline-tests:
+    # These suites need nothing beyond the standard library, so no dependencies
+    # are installed. test_classify.py reports its model-backed cases as skipped
+    # without a GROQ_API_KEY. test_server.py needs the full stack and is not run.
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          # The version the project's pins were measured on.
+          python-version: "3.14"
+      - name: Parse the knowledge base
+        run: python ingest.py --dry-run
+      - name: Retrieval gate
+        run: python test_gate.py
+      - name: Intent routing
+        run: python test_classify.py
+      - name: Rate limiting and transport
+        run: python test_ratelimit.py
+      - name: Twilio adapter
+        run: python test_whatsapp.py
+      - name: Meta adapter
+        run: python test_meta.py

@@ -1,0 +1,32 @@
+# Pinned to the versions this was measured on (py -3.14 on Windows, 13 Sep 2026).
+#
+# sentence-transformers is REQUIRED, not optional. Chroma's bundled ONNX
+# fallback truncates at 128 tokens, which leaves 66% of the corpus unembedded
+# and drops the safety gate's margin from 0.048 to 0.006. See embedder() in
+# ingest.py for the measurement. That is the whole reason this runs on a paid
+# instance rather than the free tier.
+
+# torch from the PyTorch CPU index, not PyPI.
+#
+# On Linux, plain `torch==2.13.0` resolves to the CUDA build: several GB of
+# bundled CUDA libraries for a box with no GPU, which is slow to build and
+# wasteful of a 2 GB instance. The "+cpu" local version exists only on this
+# index, so pinning it forces the small wheel.
+#
+# Verified present before pinning:
+#   torch-2.13.0+cpu-cp314-cp314-manylinux_2_28_x86_64.whl
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.13.0+cpu
+
+chromadb==1.5.9
+sentence-transformers==5.7.0
+
+fastapi==0.141.1
+uvicorn[standard]==0.52.3
+# FastAPI needs this for the Twilio webhook's Form(...) parameters. Without it
+# `import server` fails outright rather than degrading.
+python-multipart==0.0.32
+
+# Everything else is stdlib. Groq is called over urllib rather than an SDK,
+# deliberately - the argument of this project is that its moving parts are few
+# and inspectable.

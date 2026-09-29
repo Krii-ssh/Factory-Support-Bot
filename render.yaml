@@ -1,0 +1,60 @@
+# Render blueprint. Import this from the dashboard, or configure the service
+# by hand with the same values.
+#
+# Standard, not Free: the free tier is 512 MB with no disk. Memory was never
+# the problem (peak RSS measured 126 MB on the ONNX path), but the free tier
+# forces chroma's bundled ONNX embedder, which truncates at 128 tokens and
+# leaves 66% of the corpus unembedded. See embedder() in ingest.py.
+
+services:
+  - type: web
+    name: factory-accident-support-bot
+    runtime: python
+    plan: standard          # 2 GB / 1 CPU
+    region: singapore       # closest to Ludhiana of Render's regions
+
+    # Install only. ingest.py is NOT run here, deliberately.
+    #
+    # The index must be built once, from the shell, onto the mounted disk -
+    # not on every deploy. Two reasons: a build-time rebuild would write to the
+    # ephemeral filesystem rather than the disk, and rebuilding on each deploy
+    # re-embeds 31 chunks for no reason. Run it once after the first deploy:
+    #
+    #     python ingest.py
+    #
+    buildCommand: pip install -r requirements.txt
+
+    startCommand: python -m uvicorn server:app --host 0.0.0.0 --port $PORT
+
+    healthCheckPath: /health
+
+    disk:
+      name: factory-bot-data
+      mountPath: /var/data
+      sizeGB: 1
+
+    envVars:
+      # Both writable paths move onto the mounted disk. config.py defaults
+      # these to the project folder when unset, so local runs are unaffected.
+      - key: CHROMA_PATH
+        value: /var/data/chroma
+      - key: CASES_DB_PATH
+        value: /var/data/cases.db
+
+      # Holding message on. Without it an answer arrives after a silent
+      # twenty-second gap and the bot reads as broken.
+      - key: SEND_HOLDING
+        value: "1"
+
+      # Set in the dashboard, never in this file. sync:false makes Render
+      # prompt for them at deploy time instead of storing a value in the repo.
+      - key: GROQ_API_KEY
+        sync: false
+      - key: WHATSAPP_PHONE_NUMBER_ID
+        sync: false
+      - key: WHATSAPP_ACCESS_TOKEN
+        sync: false
+      - key: WHATSAPP_APP_SECRET
+        sync: false
+      - key: WHATSAPP_VERIFY_TOKEN
+        sync: false

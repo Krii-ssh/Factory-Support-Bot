@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Factory Accident Support Bot</title>
+<style>
+:root{
+  --ground:#FAFAFB; --surface:#FFFFFF; --surface-2:#F1F3F6;
+  --line:#DFE3EA; --line-strong:#C6CDD8;
+  --ink:#14181F; --ink-2:#4A5462; --ink-3:#78828F;
+  --accent:#1F3A6E; --accent-soft:#E8EDF6;
+  --danger:#A81E14; --pass:#1A6349; --warn:#8A5A00;
+  --chat-bg:#E9E3DB; --bubble-in:#FFFFFF; --bubble-out:#D6F0C8;
+  --font-body:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --font-mono:ui-monospace,"Cascadia Mono",Consolas,"SF Mono",Menlo,monospace;
+  --font-display:Georgia,"Iowan Old Style","Times New Roman",serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0; background:var(--ground); color:var(--ink);
+  font-family:var(--font-body); font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.shell{max-width:1180px; margin:0 auto; padding:24px 20px 32px; height:100%;
+  display:flex; flex-direction:column; gap:16px}
+header{border-bottom:2px solid var(--ink); padding-bottom:12px}
+.eyebrow{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--accent); margin:0 0 6px}
+h1{font-family:var(--font-display); font-weight:400; font-size:26px; margin:0 0 4px}
+.sub{margin:0; color:var(--ink-2); font-size:13.5px}
+
+.grid{display:grid; grid-template-columns:1.05fr .95fr; gap:20px; flex:1; min-height:0}
+@media (max-width:920px){.grid{grid-template-columns:1fr}}
+
+.panel{border:1px solid var(--line); background:var(--surface);
+  display:flex; flex-direction:column; min-height:0}
+.panel-head{display:flex; justify-content:space-between; align-items:baseline;
+  gap:10px; padding:10px 14px; border-bottom:1px solid var(--line);
+  background:var(--surface-2)}
+.panel-title{font-family:var(--font-mono); font-size:10.5px; letter-spacing:.12em;
+  text-transform:uppercase; color:var(--ink-2)}
+.panel-meta{font-family:var(--font-mono); font-size:10.5px; color:var(--ink-3)}
+
+#thread{flex:1; overflow-y:auto; padding:16px; background:var(--chat-bg);
+  display:flex; flex-direction:column; gap:10px; min-height:280px}
+.msg{max-width:78%; padding:9px 12px; border-radius:8px; font-size:14.5px;
+  white-space:pre-wrap; word-wrap:break-word; box-shadow:0 1px 1px rgba(0,0,0,.08)}
+.msg.out{align-self:flex-end; background:var(--bubble-out)}
+.msg.in{align-self:flex-start; background:var(--bubble-in)}
+.msg.holding{align-self:flex-start; background:var(--bubble-in); color:var(--ink-3);
+  font-style:italic}
+.msg .who{display:block; font-family:var(--font-mono); font-size:9.5px;
+  letter-spacing:.1em; text-transform:uppercase; color:var(--ink-3);
+  margin-bottom:4px}
+
+.composer{display:flex; gap:8px; padding:12px; border-top:1px solid var(--line);
+  background:var(--surface)}
+#q{flex:1; padding:10px 12px; border:1px solid var(--line-strong); border-radius:4px;
+  font-family:var(--font-body); font-size:14.5px; color:var(--ink);
+  background:var(--surface)}
+#q:focus{outline:2px solid var(--accent); outline-offset:-1px}
+button{font-family:var(--font-body); font-size:14px; padding:10px 18px; border:0;
+  border-radius:4px; background:var(--accent); color:#fff; cursor:pointer}
+button:disabled{opacity:.5; cursor:default}
+button:focus-visible{outline:2px solid var(--ink); outline-offset:2px}
+
+.examples{display:flex; flex-wrap:wrap; gap:6px; padding:10px 12px 0}
+.ex{font-size:12px; padding:5px 9px; border:1px solid var(--line-strong);
+  background:var(--surface); color:var(--ink-2); border-radius:2px; cursor:pointer}
+.ex:hover{border-color:var(--accent); color:var(--ink)}
+
+#trace{flex:1; overflow-y:auto; padding:14px}
+.empty{color:var(--ink-3); font-size:13.5px}
+.trace-row{padding:9px 0; border-bottom:1px solid var(--line)}
+.trace-row:last-child{border-bottom:0}
+.trace-label{font-family:var(--font-mono); font-size:10px; letter-spacing:.1em;
+  text-transform:uppercase; color:var(--ink-3); margin:0 0 4px}
+.trace-val{font-family:var(--font-mono); font-size:11.5px; color:var(--ink);
+  word-break:break-word; margin:0}
+.rule{display:block; padding-left:13px; position:relative; color:var(--ink-2);
+  margin-bottom:3px; line-height:1.45}
+.rule::before{content:"\203A"; position:absolute; left:0; color:var(--accent);
+  font-weight:700}
+.rule.stop{color:var(--danger)}
+.rule.stop::before{content:"\D7"; color:var(--danger)}
+.verdict{display:inline-block; font-family:var(--font-mono); font-size:10px;
+  letter-spacing:.08em; text-transform:uppercase; font-weight:700;
+  padding:3px 8px; border:1px solid}
+.v-pass{color:var(--pass); border-color:var(--pass); background:#E6F2ED}
+.v-stop{color:var(--danger); border-color:var(--danger); background:#FBEAE8}
+.v-hold{color:var(--warn); border-color:var(--warn); background:#FCF2E0}
+</style>
+</head>
+<body>
+<div class="shell">
+  <header>
+    <p class="eyebrow">Ludhiana, Punjab &middot; live pipeline</p>
+    <h1>Factory Accident Support Bot</h1>
+    <p class="sub">Every reply is drawn only from verified, in-force law. The trace
+      on the right shows which law produced it and which safety gates fired.</p>
+  </header>
+
+  <div class="grid">
+    <section class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Conversation</span>
+        <span class="panel-meta" id="status">ready</span>
+      </div>
+      <div id="thread"></div>
+      <div class="examples" id="examples"></div>
+      <form class="composer" id="form">
+        <input id="q" autocomplete="off" placeholder="Type a message&hellip;" aria-label="Your message">
+        <button id="send" type="submit">Send</button>
+      </form>
+    </section>
+
+    <section class="panel">
+      <div class="panel-head">
+        <span class="panel-title">Pipeline trace</span>
+        <span class="panel-meta" id="verdict"></span>
+      </div>
+      <div id="trace"><p class="empty">Send a message to see the trace.</p></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const EXAMPLES = [
+  "my husband died in a factory accident, what are we owed?",
+  "they took his body away, what should we do?",
+  "the owner is offering us 2 lakh to sign a paper",
+  "the police are refusing to write the FIR",
+  "he worked through a thekedar, not directly",
+  "what is the weather in Ludhiana"
+];
+
+const thread = document.getElementById("thread");
+const trace  = document.getElementById("trace");
+const form   = document.getElementById("form");
+const input  = document.getElementById("q");
+const send   = document.getElementById("send");
+const status = document.getElementById("status");
+const verdict= document.getElementById("verdict");
+
+document.getElementById("examples").innerHTML =
+  EXAMPLES.map(e => `<button class="ex" type="button">${e}</button>`).join("");
+document.querySelectorAll(".ex").forEach(b =>
+  b.addEventListener("click", () => { input.value = b.textContent; input.focus(); }));
+
+function bubble(text, cls, who) {
+  const d = document.createElement("div");
+  d.className = "msg " + cls;
+  d.textContent = text;
+  if (who) {
+    const s = document.createElement("span");
+    s.className = "who"; s.textContent = who;
+    d.prepend(s);
+  }
+  thread.appendChild(d);
+  thread.scrollTop = thread.scrollHeight;
+  return d;
+}
+
+function verdictClass(route) {
+  if (/validator PASS/.test(route)) return ["v-pass", "sent"];
+  if (/REFUSED|not called|handoff/.test(route)) return ["v-hold", "withheld"];
+  if (/error/.test(route)) return ["v-stop", "error"];
+  return ["v-pass", "sent"];
+}
+
+function renderTrace(d) {
+  const [cls, label] = verdictClass(d.route || "");
+  verdict.innerHTML = `<span class="verdict ${cls}">${label}</span>`;
+  const rules = (d.rules || []).map(r =>
+    `<span class="rule ${/CHECK|RULE1|MODEL_UNAVAILABLE/.test(r) ? "stop" : ""}">${r}</span>`
+  ).join("") || '<span class="trace-val">(none)</span>';
+  const chunks = (d.chunks || []).map(c => `<span class="rule">${c}</span>`).join("")
+    || '<span class="trace-val">(none - no retrieval)</span>';
+  const labels = (d.labels || []).map(l => `<span class="rule">${l}</span>`).join("")
+    || '<span class="trace-val">(none)</span>';
+  trace.innerHTML = `
+    <div class="trace-row"><p class="trace-label">Route</p><p class="trace-val">${d.route || ""}</p></div>
+    <div class="trace-row"><p class="trace-label">Rules fired</p>${rules}</div>
+    <div class="trace-row"><p class="trace-label">Chunks retrieved</p>${chunks}</div>
+    <div class="trace-row"><p class="trace-label">Citations</p>${labels}</div>`;
+}
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const question = input.value.trim();
+  if (!question) return;
+
+  bubble(question, "out");
+  input.value = "";
+  send.disabled = true;
+  status.textContent = "checking the law…";
+  const holding = bubble("One moment, I'm checking this against the law.", "holding", "bot");
+
+  try {
+    const res = await fetch("/chat", {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({question})
+    });
+    const data = await res.json();
+    holding.remove();
+    bubble(data.text || "(no answer)", "in", "bot");
+    renderTrace(data);
+    status.textContent = "ready";
+  } catch (err) {
+    holding.remove();
+    bubble("Something went wrong reaching the server.", "in", "bot");
+    status.textContent = "error";
+  } finally {
+    send.disabled = false;
+    input.focus();
+  }
+});
+
+input.focus();
+</script>
+</body>
+</html>
